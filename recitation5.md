@@ -1,3 +1,6 @@
+### Recitation written by Dr. Joaquin Nunez and were accessed from: https://github.com/Jcbnunez/uvm-popgen/tree/main/Recitations for PopGen SP26
+
+
 # Recitation 5: Spatially fluctuating selection
 
 Spatially fluctuating selection is a form of balancing selection in which selective pressures vary across different locations within populations connected by gene flow. This spatial variation results in shifts in the traits or alleles favored in specific environments, depending on local ecological conditions. Unlike overdominance, where heterozygotes (e.g., xij) consistently exhibit the highest fitness, spatially fluctuating selection operates more like temporally fluctuating selection: each homozygote (xii, or xjj) is favored under different conditions. However, in contrast to temporally fluctuating selection, the maintenance of polymorphism under spatially fluctuating selection depends on gene flow between populations.

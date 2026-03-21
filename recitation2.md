@@ -1,3 +1,5 @@
+### Recitation written by Dr. Joaquin Nunez and were accessed from: https://github.com/Jcbnunez/uvm-popgen/tree/main/Recitations for PopGen SP26
+
 # Recitation 2: Selection
 
 Objective:  

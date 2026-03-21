@@ -1,3 +1,6 @@
+### Recitation written by Dr. Joaquin Nunez and were accessed from: https://github.com/Jcbnunez/uvm-popgen/tree/main/Recitations for PopGen SP26
+
+
 # Recitation 4: Balancing Selection
 
 This workshop will guide participants through using R to model balancing selection, a form of natural selection that maintains genetic diversity in a population. Examples of balancing selection include heterozygote advantage, frequency-dependent selection, and environmental variation. We’ll focus on the heterozygote advantage, where the heterozygous genotype (xij) has a higher fitness than either homozygote (xii or xjj). For the purposes of this workshop we will use the “long form” version of the equations for natural selection. In the most general sense; selection, after one generation of random mating, can be modeled as

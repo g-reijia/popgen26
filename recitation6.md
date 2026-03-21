@@ -1,3 +1,5 @@
+### Recitation written by Dr. Joaquin Nunez and were accessed from: https://github.com/Jcbnunez/uvm-popgen/tree/main/Recitations for PopGen SP26
+
 # Recitation 6: Integrating forces jointly with temporal fluctuating selection
 
 In addition to temporal fluctuations in selection, other evolutionary forces can also influence the dynamics of genetic variation. Mutation, for instance, continually introduces new genetic variants into the population, which can interact with temporally fluctuating selection to either enhance or constrain adaptive potential. Similarly, other types of selection, such as directional or stabilizing selection, may act in conjunction with or counter to temporally fluctuating selection. For example, a trait favored during a particular season might also be under stabilizing selection to maintain an optimal range across years, or influenced by non-seasonal forces like temperature increases (e.g., climate change) or pollution. The interplay of these forces shapes the evolutionary trajectories of populations, highlighting the complex nature of adaptive processes in changing environments. This integrative dynamics can be modeled as:
