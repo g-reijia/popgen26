@@ -1,0 +1,80 @@
+---
+title: "Recitation 1 – HWE"
+author: "Rei Jia"
+date: "2026-01-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Step 1: Input Data
+```{r}
+# Genotype counts
+AA <- 50
+Aa <- 30
+aa <- 20 #Question 1 - what is this value?
+
+# Total population size
+N <- AA + Aa + aa
+N
+```
+
+Step 2: Calculate Observed Allele Frequencies
+```{r}
+# Observed allele frequencies
+
+p <- (2 * AA + Aa) / (2 * N) # Frequency of A
+
+q <- (2 * aa + Aa) / (2 * N) #Frequency of a # Question 2 - what is the equation?
+```
+
+Step 3: Expected Genotype Frequencies Under HWE
+```{r}
+# Expected genotype frequencies
+
+exp_AA <- p^2
+
+exp_Aa <- 2 * p * q
+
+exp_aa <- q^2
+```
+
+Step 4: Expected Genotype Counts
+```{r}
+# Convert frequencies to counts
+
+exp_counts <- c(AA = exp_AA * N, Aa = exp_Aa * N, aa = exp_aa * N)
+
+##QUESTION 3: explain in words what is occurring on this line of code?
+```
+
+QUESTION 3: explain in words what is occurring on this line of code?
+
+Step 5: Perform Chi-Square Test for HWE. In order to assess whether our population is statistically under Hardy-Weinberg Equilibrium, we will perform a statistical test called the “chi-squared.” This test compares expected and observed values and determines whether the values “fit together” (more explicitly whether they are drawn from the same or different probability distribution). A non-significant P-value indicates equilibrium, a significant one indicates a deviation from equilibrium.
+
+Chi-squared test:
+```{r}
+obs_counts <- c(AA = AA, Aa = Aa, aa = aa)
+
+chisq_test <- chisq.test(x = obs_counts, p = c(exp_AA, exp_Aa, exp_aa))
+
+chisq_test
+
+##QUESTION 4: Report and interpret the result of this analysis
+```
+
+Step 6: Visualize Observed vs. Expected Genotypes
+```{r}
+# Bar plot 
+##QUESTION 5: put this graph in your report. Describe how the graph contextualizes the results of the test
+
+barplot(rbind(obs_counts, exp_counts),
+
+beside = TRUE, col = c("skyblue", "orange"),
+
+names.arg = c("AA", "Aa", "aa"),
+
+main = "Observed (blue) vs. Expected (orange)\nGenotype Counts",ylab = "Counts")
+```
