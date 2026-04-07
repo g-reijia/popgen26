@@ -25,10 +25,22 @@ temporal_selection = function( p, sii, sij, sjj ){
 
 Step 2: Make a formula for directional selection with dominance
 
-<<QUESTION 1: Code a function for directional selection with dominance… you can code the formula for delta (or the rate) directly.. Look at your notes>>
+<<QUESTION 1: Code a function for directional selection with dominance… you can code the formula for delta (or the rate) directly... Look at your notes>>
 
 ```{r}
-# write code from question 1 here
+directional_selection = function(p, s, h){
+  q=1-p
+  pq=p*q
+  sii=0
+  sij=1-h*s
+  sjj=s
+  #num=pq*(sjj*(p*h+q[1-h]))
+  num=pq*(p*(h*sjj-sii) + q*(sjj-h*sjj))
+  dem=1-((p^2)*sii) - (2*p*q*sij) - ((q^2)*sjj)
+  delta_p = num / dem
+  return(delta_p)
+
+}
 ```
 
 Step 3: Make a formula for mutation
@@ -37,7 +49,7 @@ Step 3: Make a formula for mutation
 ```{r}
 mutation = function( p, u ){
   q=1-p
-  p_t1 = #### write your answer here for question 2#####
+  p_t1 = p*(1-u)
   return(p_t1)
 }
 ```
@@ -107,3 +119,84 @@ return(p_t1)
 ```
 
 <<QUESTION 4: holding v constant (v=1x10^-8) what magnitude of mutation rates (μ) would you need to have to notice a difference… A ballpark is fine, but try to “force” the simulation to a steady state of p=0.9... provide a plot to showcase your point (you may want to simulate 1000 generations…) >>.
+
+```{r}
+temporal_selection = function( p, sii, sij, sjj ){
+  q=1-p
+  num=(p^2)*(1-sii) + p*q*(1-sij) 
+  dem=(p^2)*(1-sii) + 2*p*q*(1-sij) + (q^2)*(1-sjj)
+  p_t1 = num/dem
+  return(p_t1)
+} 
+
+directional_selection = function(p, s, h){
+  q=1-p
+  pq=p*q
+  sii=0
+  sij=1-h*s
+  sjj=s
+  num=pq*(p*(h*sjj-sii) + q*(sjj-h*sjj))
+  dem=1-((p^2)*sii) - (2*p*q*sij) - ((q^2)*sjj)
+  delta_p = num / dem
+  return(delta_p)
+
+}
+
+mutation = function( p, u, v ){
+q=1-p
+p_t1 = p*(1-u)+ (1-p)*v
+return(p_t1)
+}
+
+simulate = function(u, v, gens=1000){
+  p_recur = numeric(gens)
+  p_recur[1] = 0.1
+  
+  for(g in 2:gens){
+    
+    # Seasonal selection
+    if(g %% 10 < 5){
+      sii=1.0; sij=0.8; sjj=0.6  # summer
+    } else{
+      sii=0.6; sij=0.8; sjj=0.1  # winter
+    }
+    
+    seasonal = temporal_selection(p_recur[g-1], sii, sij, sjj)
+    seasonal_delta = seasonal - p_recur[g-1]
+    
+    # Directional selection
+    directional_delta = directional_rate(p_recur[g-1], 0.1, 0.3)
+    
+    # Mutation
+    mut = mutation(p_recur[g-1], u, v)
+    mut_delta = mut - p_recur[g-1]
+    
+    # Update
+    p_recur[g] = p_recur[g-1] + seasonal_delta + directional_delta + mut_delta
+  }
+  
+  return(p_recur)
+}
+
+# Run simulations
+u_values = c(1e-8, 1e-4, 1e-3, 1e-2)
+v = 1e-8
+
+results = lapply(u_values, function(u) simulate(u, v))
+
+# Plot
+plot(results[[1]], type='l', col='black', ylim=c(0,1),
+     ylab="Allele frequency (p)", xlab="Generation",
+     main="Mutation vs Selection Balance")
+
+lines(results[[2]], col='blue')
+lines(results[[3]], col='green')
+lines(results[[4]], col='red')
+
+abline(h=0.9, lty=2)
+
+legend("bottomright",
+       legend=c("u=1e-8","u=1e-4","u=1e-3","u=1e-2"),
+       col=c("black","blue","green","red"),
+       lty=1)
+```
